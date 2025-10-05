@@ -1,0 +1,60 @@
+.toggle-button-quality {
+    -fx-background-color: white;
+    -fx-border-color: #58b3d7;
+    -fx-background-radius: 6 6 6 6;
+    -fx-border-radius: 6 6 6 6;
+}
+
+.toggle-button-other {
+    -fx-background-color: white;
+    -fx-border-color: white;
+    -fx-background-radius: 100 100 100 100;
+    -fx-border-radius: 100 100 100 100;
+}
+
+.button {
+    -fx-background-color: #ff0000;
+    -fx-background-radius: 6 6 0 0 ;
+    -fx-border-color: orange;
+    -fx-border-radius: 6 6 0 0;
+    -fx-border-width: 1.5;
+}
+
+.menu-button {
+    -fx-background-color: white;
+    -fx-background-radius: 6 6 6 6 ;
+    -fx-border-color: white;
+    -fx-border-radius: 6 6 6 6;
+}
+
+.toggle-button-Output {
+    -fx-background-color: white;
+    -fx-border-color: white;
+    -fx-background-radius: 6 6 6 6;
+    -fx-border-radius: 6 6 6 6;
+}
+
+.toggle-button-quality:selected,
+.toggle-button-other:selected,
+.toggle-button-Output:selected {
+    -fx-background-color: #93caf7;
+}
+
+.button:hover {
+    -fx-background-color: #c90000;
+}
+
+.dropRegion {
+    -fx-background-color: #49565e;
+}
+
+.menu-button:hover,
+.toggle-button-Output:hover,
+.toggle-button-other:hover,
+.toggle-button:hover {
+     -fx-background-color: #b9ebf7;
+ }
+
+.dropRegion:hover {
+      -fx-background-color: #64757e;
+}
