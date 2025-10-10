@@ -12,12 +12,17 @@
     -fx-border-radius: 100 100 100 100;
 }
 
-.button {
-    -fx-background-color: #ff0000;
+.convertButton {
+    -fx-background-color: #00914a;
     -fx-background-radius: 6 6 0 0 ;
-    -fx-border-color: orange;
+    -fx-border-color: #ffffff;
     -fx-border-radius: 6 6 0 0;
     -fx-border-width: 1.5;
+}
+
+.convertButton:hover {
+    -fx-background-color: #117743;
+    -fx-translate-y: -1;
 }
 
 .menu-button {
@@ -40,12 +45,16 @@
     -fx-background-color: #93caf7;
 }
 
-.button:hover {
-    -fx-background-color: #c90000;
+.inputFileNameListView {
+    -fx-background-color: #49565e;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 6 0 0 6;
 }
 
-.dropRegion {
+.inputPathListView {
     -fx-background-color: #49565e;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 0 6 6 0;
 }
 
 .menu-button:hover,
@@ -58,3 +67,4 @@
 .dropRegion:hover {
       -fx-background-color: #64757e;
 }
+

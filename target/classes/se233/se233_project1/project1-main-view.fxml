@@ -32,16 +32,17 @@
             </Label>
          </children>
       </Pane>
-      <Pane id="inputFIlePane" layoutX="20.0" layoutY="70.0" prefHeight="310.0" prefWidth="600.0">
+      <Pane id="inputFilePane" fx:id="inputPane" layoutX="20.0" layoutY="70.0" prefHeight="280.0" prefWidth="600.0">
          <children>
-            <ListView fx:id="inputListView" prefHeight="280.0" prefWidth="600.0" />
+            <ListView id="inputListView" fx:id="inputFileNameListView" prefHeight="280.0" prefWidth="250.0" styleClass="inputFileNameListView" stylesheets="@style.css" />
+            <ListView fx:id="inputFilePathListView" layoutX="250.0" prefHeight="280.0" prefWidth="350.0" styleClass="inputPathListView" stylesheets="@style.css" />
             <Button fx:id="selectFileButton" layoutX="255.0" layoutY="145.0" mnemonicParsing="false" prefWidth="100.0" text="Select file" />
-            <Label fx:id="inputLabel1" layoutX="210.0" layoutY="100.0" text="Drop audio file(s) here">
+            <Label fx:id="inputLabel1" layoutX="210.0" layoutY="100.0" text="Drop audio file(s) here" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="inputLabel2" layoutX="300.0" layoutY="125.0" text="or" textFill="#7c7c7c" />
+            <Label fx:id="inputLabel2" layoutX="300.0" layoutY="125.0" text="or" textFill="#bcbcbc" />
          </children>
       </Pane>
         <Pane layoutX="20.0" layoutY="400.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #212121; -fx-background-radius: 6 6 6 6;">
@@ -162,9 +163,9 @@
             </MenuButton>
           </buttons>
         </ButtonBar>
-      <Button layoutX="658.0" layoutY="545.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="244.0" stylesheets="@style.css" text="Convert">
+      <Button fx:id="convertButton" layoutX="650.0" layoutY="540.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" styleClass="convertButton" stylesheets="@style.css" text="Convert">
          <font>
-            <Font name="Leelawadee UI Semilight" size="31.0" />
+            <Font size="32.0" />
          </font>
       </Button>
     </Pane>
