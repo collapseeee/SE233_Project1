@@ -24,4 +24,9 @@ public class FileEntry {
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
+
+    @Override
+    public String toString() {
+        return fileName;
+    }
 }

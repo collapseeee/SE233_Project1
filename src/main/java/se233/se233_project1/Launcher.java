@@ -12,7 +12,7 @@ public class Launcher extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("project1-main-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("TeeYai Convertor");
+        stage.setTitle("TeeYai Converter");
         stage.setScene(scene);
         stage.show();
     }

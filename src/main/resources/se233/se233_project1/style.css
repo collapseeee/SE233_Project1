@@ -14,9 +14,9 @@
 
 .convertButton {
     -fx-background-color: #00914a;
-    -fx-background-radius: 6 6 0 0 ;
+    -fx-background-radius: 6 6 6 6 ;
     -fx-border-color: #ffffff;
-    -fx-border-radius: 6 6 0 0;
+    -fx-border-radius: 6 6 6 6;
     -fx-border-width: 1.5;
 }
 
@@ -45,16 +45,10 @@
     -fx-background-color: #93caf7;
 }
 
-.inputFileNameListView {
+.inputRegion {
     -fx-background-color: #49565e;
     -fx-border-width: 1.5;
     -fx-border-radius: 6 0 0 6;
-}
-
-.inputPathListView {
-    -fx-background-color: #49565e;
-    -fx-border-width: 1.5;
-    -fx-border-radius: 0 6 6 0;
 }
 
 .menu-button:hover,
