@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
+import se233.se233_project1.exception.AudioConvertionException;
 import se233.se233_project1.model.FileEntry;
 import se233.se233_project1.model.OutputItem;
 
@@ -17,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -39,8 +41,6 @@ public class MainViewController {
     @FXML
     private Pane leftPane;
     @FXML
-    private ToggleGroup FandR;
-    @FXML
     private CheckBox fadeinButton;
     @FXML
     private CheckBox fadeoutButton;
@@ -56,16 +56,12 @@ public class MainViewController {
     @FXML
     private MenuButton sampleRateMenuButton;
     @FXML
-    private ToggleGroup Channels;
-    @FXML
     private ToggleButton channel1Button;
     @FXML
     private ToggleButton channel2Button;
 
     @FXML
     private Pane rightPane;
-    @FXML
-    private ToggleGroup Quality;
     @FXML
     private ToggleButton bestButton;
     @FXML
@@ -196,7 +192,7 @@ public class MainViewController {
                         controller.setData(outputItem, () -> getListView().getItems().remove(outputItem), selectedFormatButton.getText());
                         setGraphic(cellRoot);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        System.err.println("Error loading OutputItemCell: " + e);
                     }
                 }
             }
@@ -334,38 +330,6 @@ public class MainViewController {
                 break;
             }
 
-            case "ogg": {
-                rightPane.setDisable(false);
-                bestLabel.setText("Best (256 kbps)");
-                goodLabel.setText("Good (160 kbps)");
-                standardLabel.setText("Standard (128 kbps)");
-                economyLabel.setText("Economy (64 kbps)");
-
-                constantMenuButton.getItems().clear();
-                constantMenuButton.setDisable(false);
-                int[] bitrates = {96, 112, 128, 160, 192, 224, 256};
-                for (Integer bitrate : bitrates) {
-                    MenuItem item = new MenuItem(bitrate + " kbps");
-                    item.setOnAction(event -> {
-                        constantMenuButton.setText(item.getText());
-                    });
-                    constantMenuButton.getItems().add(item);
-                }
-
-                variableMenuButton.setDisable(true);
-
-                sampleRateMenuButton.getItems().clear();
-                int[] rates = {8000,11025,12000,16000,22050,24000,32000,44100,48000};
-                for (Integer rate : rates) {
-                    MenuItem item = new MenuItem(rate + " Khz");
-                    item.setOnAction(event -> {
-                        sampleRateMenuButton.setText(item.getText());
-                    });
-                    sampleRateMenuButton.getItems().add(item);
-                }
-                break;
-            }
-
             case "mp2": {
                 rightPane.setDisable(false);
                 bestLabel.setText("Best (256 kbps)");
@@ -443,7 +407,6 @@ public class MainViewController {
         ToggleButton selectedFormatButton = (ToggleButton) OutputFormat.getSelectedToggle();
 
         String format = selectedFormatButton.getText();
-
         String constant = constantMenuButton.getText().equals("Constant") ? getBitrateByQuality(format) : constantMenuButton.getText();
         String variable = variableMenuButton.getText().equals("Variable") ? null : variableMenuButton.getText();
         String sampleRate =  sampleRateMenuButton.getText().replace(" Khz", "");
@@ -452,11 +415,16 @@ public class MainViewController {
         boolean fadeOut = fadeoutButton.isSelected();
         boolean reverse = reverseButton.isSelected();
 
+        convertButton.setDisable(true);
+        outputListView.getItems().clear();
+
+        CountDownLatch latch = new CountDownLatch(fileEntryList.size());
+
         for (FileEntry entry : fileEntryList) {
             OutputItem outputItem = new OutputItem(entry.getFileName(), 0);
-            outputListView.getItems().add(outputItem);
+            Platform.runLater(() -> outputListView.getItems().add(outputItem));
 
-            Converter converterTask = new Converter(entry, format, constant, variable, sampleRate, channel, fadeIn, fadeOut, reverse, outputItem::setProgress);
+            Converter converterTask = new Converter(entry, format, constant, variable, sampleRate, channel, fadeIn, fadeOut, reverse, outputItem);
 
             executor.submit(() -> {
                try {
@@ -466,11 +434,35 @@ public class MainViewController {
                        outputItem.setCompleted(true);
                        outputItem.setConvertedPath(converted.getFilePath());
                    });
+               } catch (AudioConvertionException e) {
+                   Platform.runLater(() -> {
+                       outputItem.markFailed();
+                       Alert errAlert = new Alert(Alert.AlertType.ERROR);
+                       errAlert.setContentText("Audio convertion failed on `" + entry.getFileName() + "`\n" + e.getMessage());
+
+                   });
                } catch (Exception e) {
                    e.printStackTrace();
-                   Platform.runLater(outputItem::markFailed);
+                   Platform.runLater(() -> {
+                       outputItem.markFailed();
+                       Alert errAlert = new Alert(Alert.AlertType.ERROR);
+                       errAlert.setContentText("Unexpected error on `" + entry.getFileName() + "`\n" + e.getMessage());
+                       errAlert.showAndWait();
+                   });
+               } finally {
+                   latch.countDown();
                }
             });
         }
+        executor.submit(() -> {
+            try {
+                latch.await();
+            } catch (InterruptedException e) {}
+            Platform.runLater(() -> convertButton.setDisable(false));
+        });
+    }
+
+    public void shutdownExecutor() {
+        executor.shutdownNow();
     }
 }

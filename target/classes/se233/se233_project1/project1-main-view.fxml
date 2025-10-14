@@ -127,7 +127,7 @@
                </font>
             </Label>
          </children></Pane>
-        <ButtonBar fx:id="buttonBar" buttonOrder="" layoutX="30.0" layoutY="406.0" prefHeight="40.0">
+        <ButtonBar fx:id="buttonBar" buttonOrder="" layoutX="71.0" layoutY="406.0" prefHeight="40.0">
           <buttons>
               <ToggleButton fx:id="mp3Button" mnemonicParsing="false" styleClass="toggle-button-Output" stylesheets="@style.css" text="mp3">
                   <toggleGroup>
@@ -137,7 +137,6 @@
             <ToggleButton fx:id="wavButton" mnemonicParsing="false" styleClass="toggle-button-Output" stylesheets="@style.css" text="wav" toggleGroup="$OutputFormat" />
             <ToggleButton fx:id="m4aButton" mnemonicParsing="false" styleClass="toggle-button-Output" stylesheets="@style.css" text="m4a" toggleGroup="$OutputFormat" />
             <ToggleButton fx:id="flacButton" mnemonicParsing="false" styleClass="toggle-button-Output" stylesheets="@style.css" text="flac" toggleGroup="$OutputFormat" />
-            <ToggleButton fx:id="oggButton" mnemonicParsing="false" styleClass="toggle-button-Output" stylesheets="@style.css" text="ogg" toggleGroup="$OutputFormat" />
             <ToggleButton fx:id="mp2Button" mnemonicParsing="false" styleClass="toggle-button-Output" stylesheets="@style.css" text="mp2" toggleGroup="$OutputFormat" />
           </buttons>
         </ButtonBar>
