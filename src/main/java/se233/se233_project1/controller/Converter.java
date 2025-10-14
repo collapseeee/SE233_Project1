@@ -59,6 +59,8 @@ public class Converter implements Callable<FileEntry> {
             System.out.println("Converting " + entry.getFileName() + " to " + outputFormat);
 
             Path ffmpegDir = extractFfmpegFolder();
+            System.out.println("Extracted FFmpeg dir: " + ffmpegDir);
+            Files.list(ffmpegDir).forEach(System.out::println);
             Path inputPath = Paths.get(entry.getFilePath());
             Path outputPath = Paths.get(tempOutputPath);
 

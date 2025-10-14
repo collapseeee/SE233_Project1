@@ -439,7 +439,7 @@ public class MainViewController {
                        outputItem.markFailed();
                        Alert errAlert = new Alert(Alert.AlertType.ERROR);
                        errAlert.setContentText("Audio convertion failed on `" + entry.getFileName() + "`\n" + e.getMessage());
-
+                       errAlert.showAndWait();
                    });
                } catch (Exception e) {
                    e.printStackTrace();
@@ -457,7 +457,9 @@ public class MainViewController {
         executor.submit(() -> {
             try {
                 latch.await();
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException e) {
+                System.out.println("Interrupted Exception: " + e.getMessage());
+            }
             Platform.runLater(() -> convertButton.setDisable(false));
         });
     }
